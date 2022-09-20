@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _editController = TextEditingController();
   var fetchData = FirebaseFirestore.instance
       .collection("todolist")
-      .orderBy("createdTime", descending: true)
+      .orderBy("createdTime")
       .snapshots();
   var isEdit = false;
 
@@ -132,6 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     return Expanded(
                       child: Container(
+                        width: MediaQuery.of(context).size.width,
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
@@ -141,10 +142,20 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                          child: isEdit
-                              ? editListView(items)
-                              : listView(
-                                  items), //display normal view or edit view
+                          child: items.isEmpty
+                              ? const Center(
+                                  child: Text(
+                                    "Add New Task Now!",
+                                    style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
+                              : isEdit //display normal view or edit view
+                                  ? editListView(items)
+                                  : listView(items),
                         ),
                       ),
                     );
