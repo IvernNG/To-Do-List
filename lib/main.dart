@@ -155,7 +155,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                 )
                               : isEdit //display normal view or edit view
                                   ? editListView(items)
-                                  : listView(items),
+                                  : RefreshIndicator(
+                                      child: listView(items),
+                                      onRefresh: _refresh,
+                                      color: Colors.purple,
+                                    ),
                         ),
                       ),
                     );
@@ -170,6 +174,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _refresh() {
+    return Future.delayed(
+      Duration(seconds: 1),
     );
   }
 
@@ -358,7 +368,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
+                          color: Colors.grey.shade300,
                           borderRadius: const BorderRadius.all(
                             Radius.circular(13.0),
                           ),
