@@ -156,7 +156,11 @@ class _MyHomePageState extends State<MyHomePage> {
                               : isEdit //display normal view or edit view
                                   ? editListView(items)
                                   : RefreshIndicator(
-                                      child: listView(items),
+                                      child: SizedBox(
+                                        child: listView(items),
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                      ),
                                       onRefresh: _refresh,
                                       color: Colors.purple,
                                     ),
@@ -209,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(),
                   ),
-                  hintText: "Enter New Listing Name",
+                  hintText: "Enter New Task Name",
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       width: 2,
