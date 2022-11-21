@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
@@ -10,6 +11,34 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  String? token = await messaging.getToken(
+    vapidKey:
+        "BG-xhNBV4JoTElI8lJlTvV5JjNRZPABXVFBH5VqKb4AycEKDYRZGn62lcWxucvTiE7XIJtwKsCS5CA6VK6IGqYY",
+  );
+
+  // FirebaseMessaging.instance.getToken().then((token) {
+  //   print("token $token");
+  // });
+
+  print('User granted permission: ${settings.authorizationStatus}');
+
+  // messaging.getToken().then((value) {
+  //   print(value);
+  // });
+
+  print(token);
 
   runApp(const MyApp());
 }
